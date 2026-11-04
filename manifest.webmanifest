@@ -1,0 +1,9 @@
+{
+  "name": "VANTORA SURVEY AI",
+  "short_name": "VANTORA AI",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f3f6fb",
+  "theme_color": "#10294a",
+  "description": "Assistant personnel pour organiser et comprendre les sondages."
+}

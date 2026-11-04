@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#10294a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VANTORA AI">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>VANTORA SURVEY AI</title>
+<style>
+:root{--navy:#10294a;--blue:#1e4f83;--gold:#e6bd62;--bg:#f3f6fb;--ink:#15243a;--muted:#6b7890;--white:#fff;--line:#e3e9f2}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:linear-gradient(135deg,#10294a,#1d4c7d);color:white;padding:26px 20px 24px;border-radius:0 0 26px 26px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border:1px solid #ffffff55;border-radius:15px;display:grid;place-items:center;font-size:23px;background:#ffffff14}
+.brand small{display:block;color:#c9d8ea;letter-spacing:2px;font-size:10px;margin-top:3px}
+h1{font-size:20px;margin:0;letter-spacing:1.4px}header p{color:#d8e5f3;font-size:13px;margin:20px 0 0;line-height:1.5}
+main{max-width:680px;margin:auto;padding:18px 15px 40px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:-2px}
+.stat,.panel{background:white;border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:0 5px 18px #19365b08}
+.stat strong{font-size:23px;display:block;color:var(--navy)}.stat span{font-size:11px;color:var(--muted)}
+h2{font-size:16px;margin:23px 2px 11px}.panel{margin-bottom:13px}
+label{display:block;font-size:12px;font-weight:650;margin:12px 0 6px;color:#34445c}
+input,textarea,select{width:100%;border:1px solid #d8e1ed;border-radius:11px;padding:12px;font:inherit;font-size:14px;background:#fbfcfe;color:var(--ink);outline:none}
+textarea{min-height:100px;resize:vertical}button{border:0;border-radius:12px;padding:13px 15px;font-weight:700;font-size:14px;cursor:pointer}
+.primary{background:var(--navy);color:white;width:100%;margin-top:12px}.secondary{background:#edf3fa;color:var(--navy);width:100%;margin-top:9px}
+.note{font-size:11px;line-height:1.5;color:var(--muted);margin:10px 2px}
+.output{white-space:pre-wrap;background:#f4f7fb;border:1px dashed #cbd8e8;border-radius:12px;padding:12px;font-size:13px;line-height:1.5;min-height:45px}
+.nav{display:flex;gap:8px;overflow:auto;margin:17px 0}.nav button{white-space:nowrap;background:#e7edf5;color:#334760;padding:10px 13px}.nav button.active{background:var(--navy);color:white}
+footer{text-align:center;color:#8793a5;font-size:10px;padding:10px}
+.hidden{display:none}.gold{color:var(--gold)}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">✦</div><div><h1>VANTORA</h1><small>SURVEY AI · SMART ASSISTANT</small></div></div>
+ <p>Ton espace personnel pour organiser tes sondages, comprendre les questions et préparer des réponses fidèles à ta situation.</p>
+</header>
+<main>
+ <div class="stats">
+  <div class="stat"><strong id="count">0</strong><span>Sondages suivis</span></div>
+  <div class="stat"><strong id="earned">R$ 0,00</strong><span>Gains enregistrés</span></div>
+ </div>
+ <div class="nav">
+  <button class="active" data-tab="assistant">Assistant</button>
+  <button data-tab="profile">Mon profil</button>
+  <button data-tab="history">Historique</button>
+ </div>
+ <section id="assistant">
+  <h2>Assistant KingOpinion</h2>
+  <div class="panel">
+   <label for="question">Colle ici la question du sondage</label>
+   <textarea id="question" placeholder="Ex. Quelle est votre situation professionnelle actuelle ?"></textarea>
+   <label for="context">Précision utile (facultatif)</label>
+   <input id="context" placeholder="Ex. Je suis actuellement sans emploi">
+   <button class="primary" id="analyze">Analyser la question</button>
+   <div id="resultWrap" class="hidden">
+    <label>Analyse et conseil</label><div class="output" id="result"></div>
+    <button class="secondary" id="copyPrompt">Copier une demande d'aide à l'IA</button>
+   </div>
+   <p class="note">L'assistant t'aide à comprendre la question. Il ne choisit pas une fausse identité et ne remplit pas automatiquement KingOpinion.</p>
+  </div>
+  <h2>Ajouter un sondage à ton suivi</h2>
+  <div class="panel">
+   <label for="surveyName">Nom du sondage / fournisseur</label>
+   <input id="surveyName" value="KingOpinion">
+   <label for="surveyAmount">Gain reçu (R$)</label>
+   <input id="surveyAmount" type="number" min="0" step="0.01" placeholder="0,00">
+   <button class="primary" id="addSurvey">Enregistrer dans mon historique</button>
+  </div>
+ </section>
+ <section id="profile" class="hidden">
+  <h2>Mon profil personnel</h2>
+  <div class="panel">
+   <p class="note">Renseigne uniquement des informations exactes. Elles restent enregistrées dans le stockage local de ce navigateur sur ton appareil.</p>
+   <label for="age">Tranche d'âge</label><select id="age"><option value="">Choisir</option><option>18–24</option><option>25–34</option><option>35–44</option><option>45–54</option><option>55+</option></select>
+   <label for="work">Situation professionnelle</label><select id="work"><option value="">Choisir</option><option>Employé à temps plein</option><option>Employé à temps partiel</option><option>Indépendant</option><option>Sans emploi</option><option>Étudiant</option><option>Autre</option></select>
+   <label for="education">Niveau d'études</label><select id="education"><option value="">Choisir</option><option>Secondaire / lycée</option><option>Baccalauréat</option><option>Études supérieures</option><option>Autre</option></select>
+   <label for="country">Pays de résidence</label><input id="country" placeholder="Ex. Brésil">
+   <label for="industry">Secteur d'activité (si applicable)</label><input id="industry" placeholder="Ex. Industrie, commerce, aucun">
+   <button class="primary" id="saveProfile">Enregistrer mon profil</button>
+   <p class="note" id="saved"></p>
+  </div>
+ </section>
+ <section id="history" class="hidden">
+  <h2>Historique</h2><div class="panel" id="historyList"><p class="note">Aucun sondage enregistré pour le moment.</p></div>
+ </section>
+ <footer>VANTORA SURVEY AI · Version 1.0 · Tes données restent sur cet appareil.</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const get=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
+const set=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+let profile=get('v_profile',{}), history=get('v_history',[]);
+function loadProfile(){['age','work','education','country','industry'].forEach(k=>$(k).value=profile[k]||'')}
+function refresh(){
+ $('count').textContent=history.length;
+ const sum=history.reduce((a,x)=>a+(Number(x.amount)||0),0);
+ $('earned').textContent='R$ '+sum.toFixed(2).replace('.',',');
+ $('historyList').innerHTML=history.length?history.slice().reverse().map(x=>`<div style="padding:10px 0;border-bottom:1px solid #e7edf4"><b>${escapeHtml(x.name)}</b><div class="note">${escapeHtml(x.date)} · R$ ${Number(x.amount).toFixed(2).replace('.',',')}</div></div>`).join(''):'<p class="note">Aucun sondage enregistré pour le moment.</p>';
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>{
+ document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');
+ ['assistant','profile','history'].forEach(t=>$(t).classList.toggle('hidden',t!==b.dataset.tab));
+}));
+$('saveProfile').onclick=()=>{['age','work','education','country','industry'].forEach(k=>profile[k]=$(k).value.trim());set('v_profile',profile);$('saved').textContent='Profil enregistré sur cet appareil.'};
+$('analyze').onclick=()=>{
+ const q=$('question').value.trim();if(!q){alert('Colle d’abord une question.');return}
+ const c=$('context').value.trim();
+ let tip='Lis attentivement la question et choisis la réponse qui décrit réellement ta situation.';
+ if(/situa.{0,20}profession|trabalho|professionnelle/i.test(q))tip='Cette question porte sur ton statut professionnel actuel. Choisis ton statut réel au moment où tu réponds.';
+ else if(/renda|revenu|income|salaire/i.test(q))tip='Cette question porte sur les revenus. Vérifie la période et la devise demandées; ne devine pas un montant.';
+ else if(/escolar|école|education|études/i.test(q))tip='Cette question porte sur ton niveau d’études. Sélectionne le niveau réellement atteint, pas celui que tu envisages.';
+ else if(/empresa|entreprise|secteur|industry/i.test(q))tip='Cette question porte probablement sur le secteur d’activité. Si tu ne travailles pas, vérifie si le sondage demande ton secteur personnel ou celui de ton employeur.';
+ $('result').textContent=tip+(c?'\n\nPrécision fournie : '+c:'')+'\n\nProfil enregistré : '+(profile.work||'situation professionnelle non renseignée')+'. '+(profile.education||'Niveau d’études non renseigné')+'.';
+ $('resultWrap').classList.remove('hidden');
+};
+$('copyPrompt').onclick=async()=>{
+ const prompt='Aide-moi à comprendre cette question de sondage et les choix possibles. Ne réponds pas à ma place et ne suppose aucune information. Base-toi uniquement sur mon profil réel : '+JSON.stringify(profile)+'\nQuestion : '+$('question').value+'\nPrécision : '+$('context').value+'\nExplique quelle option correspondrait à ces faits, ou demande une précision si nécessaire.';
+ try{await navigator.clipboard.writeText(prompt);$('copyPrompt').textContent='Demande copiée !'}catch{$('result').textContent+='\n\nCopie non disponible dans ce navigateur.'}
+};
+$('addSurvey').onclick=()=>{const name=$('surveyName').value.trim()||'KingOpinion';const amount=Number($('surveyAmount').value)||0;history.push({name,amount,date:new Date().toLocaleDateString('fr-FR')});set('v_history',history);$('surveyAmount').value='';refresh();alert('Sondage enregistré.');};
+loadProfile();refresh();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
